@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .bg-video-wrap{
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: url(https://designsupply-web.com/samplecontent/vender/code)
+        }
+        video {
+        min-width: 100%;
+        min-height: 100vh;
+
+        }
+        .overall{
+            left: 50%;
+            top: 30%;
+            position: absolute;
+            
+        }
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 380px;
+            margin-bottom: 0px;
+    }  
+    .theme{ 
+      padding: 5px;
+      height: 30px;
+      background: none;
+      border: 2px black solid;
+      font-size: 15px;
+      margin-left: 10px;
+      justify-content: space-between;
+    }
+    img{
+      border-radius: 3px;
+      margin-top: 10%;
+    }
+    .progress-bar {
+      position: relative;
+      width: 70%;
+      height: 5px;
+      background-color: #eee;
+      vertical-align: 2px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10%;
+      margin-left: -40%;
+      margin-bottom: 0px;
+    }
+   
+
+    .now {
+      position: absolute;
+      left: 0;
+      display: inline-block;
+      height: 5px;
+      width: 70%;
+      background: #c23144;
+    }
+
+    .now::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      width: 3px;
+      height: 7px;
+      background-color: lightblue;
+    }
+    .mus{
+      margin-left: -9999px;
+      height: 0px;
+      width: 0px;
+      display: none;
+    }
+    #play{
+      margin-top: 30px;
+      margin-left: 50px;
+      width: 30px;
+      background: none;
+      border: 0px;
+    }
+    
+      </style>
+</head>
+<body>
+
+    <div class="bg-video-wrap">
+        <video id="dark" src="rain.mp4" loop muted autoplay >
+        </video>
+        <div class="overall">
+        <button class="theme" id="darkTheme" onclick="darkTheme()">Dark theme</button>
+        <button  class="theme" id="lightTheme" onclick="lightTheme()">Light theme</button><br>
+        <img src="summertime.jpeg">
+        <div class="center">
+         
+        
+        <audio controls id="music" class="mus">
+                <source src="lana-del-rey-summertime-sadness(mp3bit.cc).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
+        <audio controls id="music2" class="mus" src="rain.mp3">
+        <audio controls id="music3" class="mus" src="birds.mp3"></audio>
+          
+  </audio>
+        
+        <div class="progress">
+            <span class="start"></span>
+            <div class="progress-bar">
+
+              <div class="now">
+              </div>
+            </div>
+            <span class="end"></span>
+          </div>
+          <button onclick="play()" id="play"><svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM176 168V344C176 352.7 180.7 360.7 188.3 364.9C195.8 369.2 205.1 369 212.5 364.5L356.5 276.5C363.6 272.1 368 264.4 368 256C368 247.6 363.6 239.9 356.5 235.5L212.5 147.5C205.1 142.1 195.8 142.8 188.3 147.1C180.7 151.3 176 159.3 176 168V168z"/></svg></button>
+          <button onclick="pause()" id="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM224 191.1v128C224 337.7 209.7 352 192 352S160 337.7 160 320V191.1C160 174.3 174.3 160 191.1 160S224 174.3 224 191.1zM352 191.1v128C352 337.7 337.7 352 320 352S288 337.7 288 320V191.1C288 174.3 302.3 160 319.1 160S352 174.3 352 191.1z"/></svg></button>
+          <br><button class="theme" id="rain" style="margin-left: 90px;">Rain</button>
+        </div>
+    </div>
+      </div>
+    <script>
+  const audio = document.getElementById('music')
+  const audio2 = document.getElementById('music2')
+  const start = document.querySelector('.start')
+  const end = document.querySelector('.end')
+  const progressBar = document.querySelector('.progress-bar')
+  const now = document.querySelector('.now')
+  const rain = document.getElementById('rain')
+
+  progressBar.addEventListener('click', function (event) {
+    let coordStart = this.getBoundingClientRect().left
+    let coordEnd = event.pageX
+    let p = (coordEnd - coordStart) / this.offsetWidth
+    audio.currentTime = p * audio.duration
+    console.log(p)
+    audio.play()
+  })
+
+  setInterval(() => {
+    now.style.width = audio.currentTime / audio.duration.toFixed(3) * 100 + '%'
+  }, 1000)
+        const dark = document.getElementById('dark')
+        function darkTheme(){ 
+          var light=document.getElementsByTagName('button')
+          for(var i =0;i<light.length;i++){
+            light[i].style.color = 'black'
+            light[i].style.border = '2px solid black'
+          }
+          light[4].innerHTML='Rain'
+            dark.src='rain.mp4'
+        }
+        function lightTheme(){ 
+          var light=document.getElementsByTagName('button')
+          for(var i =0;i<light.length;i++){
+            light[i].style.color = 'white'
+            light[i].style.border = '2px solid white'
+          }
+          // light[4].innerHTML='Bird'
+          
+          dark.src='light.mp4'
+        }
+        let button = document.getElementById('music')
+        function pause(){
+            button.pause()
+        }
+        function play(){
+            button.play()
+        }
+       
+var isPlaying = false;
+rain.addEventListener('click',function(event){
+  togglePlay()
+})
+function togglePlay() {
+  if (isPlaying) {
+    audio2.pause()
+  } else {
+    audio2.play();
+  }
+};
+audio2.onplaying = function() {
+  isPlaying = true;
+};
+audio2.onpause = function() {
+  isPlaying = false;
+};       
+    </script>
+</body>
+</html>
