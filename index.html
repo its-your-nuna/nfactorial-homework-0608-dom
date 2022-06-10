@@ -161,6 +161,10 @@
           }
           light[4].innerHTML='Rain'
             dark.src='rain.mp4'
+            audio2.src='rain.mp3'
+          console.log("audio2.src", audio2.src)
+
+           
         }
         function lightTheme(){ 
           var light=document.getElementsByTagName('button')
@@ -168,8 +172,9 @@
             light[i].style.color = 'white'
             light[i].style.border = '2px solid white'
           }
-          // light[4].innerHTML='Bird'
-          
+          light[4].innerHTML='Bird'
+          audio2.src='birds.mp3'
+          console.log("audio2.src", audio2.src)
           dark.src='light.mp4'
         }
         let button = document.getElementById('music')
@@ -179,24 +184,19 @@
         function play(){
             button.play()
         }
-       
-var isPlaying = false;
+
 rain.addEventListener('click',function(event){
   togglePlay()
 })
 function togglePlay() {
-  if (isPlaying) {
-    audio2.pause()
-  } else {
-    audio2.play();
-  }
+  if (audio2.paused && audio2.currentTime >= 0 && !audio2.started) {
+          audio2.play();
+         console.log("started");
+     } else {
+      audio2.pause();
+     }
 };
-audio2.onplaying = function() {
-  isPlaying = true;
-};
-audio2.onpause = function() {
-  isPlaying = false;
-};       
+       
     </script>
 </body>
 </html>
